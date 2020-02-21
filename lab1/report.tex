@@ -1,0 +1,100 @@
+\documentclass[a4paper,14pt]{article} % формат документа
+
+\usepackage{amsmath}
+\usepackage{cmap} % поиск в ПДФ
+\usepackage[T2A]{fontenc} % кодировка
+\usepackage[utf8]{inputenc} % кодировка исходного текста
+\usepackage[english,russian]{babel} % локализация и переносы
+\usepackage[left = 2cm, right = 1cm, top = 2cm, bottom = 2 cm]{geometry} % поля
+\usepackage{listings}
+\usepackage{graphicx} % для вставки рисунков
+\usepackage{amsmath}
+\graphicspath{{pictures/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\newcommand{\anonsection}[1]{\section*{#1}\addcontentsline{toc}{section}{#1}}
+
+\lstset{ %
+	language=Python,                % Язык программирования 
+	numbers=left,                   % С какой стороны нумеровать          
+	frame=single,                    % Добавить рамку
+}
+
+\begin{document}
+
+\textbf{Цель работы: } Изучить методы решения задачи Коши для обыкновенных дифференциальных уравнений, применив приближенно-аналитический метод Пикара и численный метод Эйлера в явном и неявном виде. 
+
+Ищем решение уравнения:
+$$
+\left\{
+  \begin{array}{ccc}
+     u'(x)=x^2+u^2 \\
+     u(0)=0 \\
+  \end{array}
+\right.
+$$
+
+\begin{enumerate}
+\item \textbf{Метод Пикара}
+
+$$y^{(1)}=\frac{x^3}{3}
+~~~~~~~y^{(2)}=\frac{x^3}{3} + \frac{x^7}{63}
+~~~~~~~y^{(3)}=\frac{x^3}{3}+ \frac{x^7}{63} + \frac{2x^{11}}{2079} + \frac{x^{15}}{59535}$$
+
+$$y^{(4)}=\frac{x^3}{3}+ \frac{x^7}{63} + \frac{2x^{11}}{2079} + \frac{13x^{15}}{218295} + \frac{82x^{19}}{37328445} +  \frac{662x^{23}}{10438212015}+\frac{4x^{27}}{3341878155}+\frac{x^{31}}{109876902975}$$
+
+\item \textbf{Метод Эйлера}
+\begin{enumerate}
+\item \textbf{Явный вид}
+
+$$y_{n+1}=y_n+h\cdot f(x_n,y_n)\text{ , где }f(x,y)=x^2+y^2$$
+
+\item \textbf{Неявный вид}
+
+$$y_{n+1}=y_n+h\cdot f(x_{n+1},y_{n+1})\text{ , где }f(x,y)=x^2+y^2$$
+
+\end{enumerate}
+\end{enumerate}
+
+ 
+\begin{lstlisting}[caption=Метод Пикара]
+def pikar(approx, x):
+    switcher = {
+            1 : pow(x, 3) / 3.0,
+            2 : pow(x, 3) / 3.0 + pow(x, 7) / 63.0,
+            3 : pow(x, 3) / 3.0 + pow(x, 7) / 63.0 + 2 * pow(x, 11) / 2079.0
+                + pow(x, 15) / 59535.0,
+            4 : pow(x, 3) / 3.0 + pow(x, 7) / 63.0 + 2 * pow(x, 11) / 2079.0
+                + 13 * pow(x, 15) / 218295.0 + 82 * pow(x, 19) / 37328445.0
+                + 662 * pow(x, 23) / 10438212015.0 + 4 * pow(x, 27) / 3341878155.0
+                + pow(x, 31) / 109876902975.0
+            }
+    return switcher.get(approx, "Invalid approx")
+\end{lstlisting}
+        
+\begin{lstlisting}[caption=Метод Эйлера(явный)]
+def explicit_function(x, h):
+    f = 0
+    x0 = h
+    while (x0 < x + h / 2):
+        f += h * (x0 * x0 + f * f)
+        x0 += h
+    return f
+            }
+    return switcher.get(approx, "Invalid approx")
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Метод Эйлера(неявный)]
+def notexplicit_function(x, h):
+    f = 0
+    x0 = h
+    while (x0 < x + h):
+        descr = 1 - 4 * h * (h * x0 * x0 + f)
+        if (descr >= 0):
+            f1 = (1 + sqrt(descr)) / 2 / h
+            f2 = (1 - sqrt(descr)) / 2 / h
+            f = f1 if f2 < 0 else f2 if f1 < 0 else min(f1, f2)
+        x0 += h
+    return f
+\end{lstlisting}
+
+\end{document}
