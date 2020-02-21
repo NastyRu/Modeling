@@ -34,8 +34,6 @@ def notexplicit_function(x, h):
     return f
 
 def main():
-    print(explicit_function(0.6, 0.001))
-    print(notexplicit_function(0.6, 0.001))
     i = 0
     print('Pikar')
     print('   X  | 1 approx| 2 approx| 3 approx| 4 approx')
@@ -56,6 +54,6 @@ def main():
     while(i < 2):
         print('%5.2f | %7.5f | %7.5f | %7.5f | %7.5f| %7.5f| %7.5f' % (i, notexplicit_function(i, 0.1), notexplicit_function(i, 0.01), notexplicit_function(i, 0.001), notexplicit_function(i, 0.0001), notexplicit_function(i, 0.00001), notexplicit_function(i, 0.000001)))
         i += 0.1
-        
+
 if __name__ == "__main__":
     main()
