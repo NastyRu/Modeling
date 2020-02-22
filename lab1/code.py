@@ -44,15 +44,22 @@ def main():
     i = 0
     print('Explicit function')
     print('   X  |    -1   |    -2   |    -3   |    -4  |    -5  |    -6   ')
-    while(i < 2):
+    while(i < 2.1):
         print('%5.2f | %4.5f | %4.5f | %4.5f | %4.5f| %4.5f| %4.5f' % (i, explicit_function(i, 0.1), explicit_function(i, 0.01), explicit_function(i, 0.001), explicit_function(i, 0.0001), explicit_function(i, 0.00001), explicit_function(i, 0.000001)))
         i += 0.1
 
     i = 0
     print('Not explicit function')
-    print('   X  |    -1   |    -2   |    -3   |    -4   |    -5   |  -6  ')
-    while(i < 2):
+    print('   X  |    -1   |    -2   |    -3   |   -4   |   -5   |  -6  ')
+    while(i < 2.1):
         print('%5.2f | %7.5f | %7.5f | %7.5f | %7.5f| %7.5f| %7.5f' % (i, notexplicit_function(i, 0.1), notexplicit_function(i, 0.01), notexplicit_function(i, 0.001), notexplicit_function(i, 0.0001), notexplicit_function(i, 0.00001), notexplicit_function(i, 0.000001)))
+        i += 0.1
+
+    print('Pikar, Eiler')
+    i = 0
+    print('   X  | 1 approx| 2 approx| 3 approx| 4 approx| Explicit| Not Explicit')
+    while(i < 2.1):
+        print('%5.2f | %4.5f | %4.5f | %4.5f | %4.5f | %7.5f | %7.5f' % (i, pikar(1, i), pikar(2, i), pikar(3, i), pikar(4, i), explicit_function(i, 0.00001), notexplicit_function(i, 0.00001)))
         i += 0.1
 
 if __name__ == "__main__":
