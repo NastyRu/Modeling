@@ -35,12 +35,12 @@ def graf():
     ax3.set_ylabel('$Rp$')
 
     ax4 = plt.subplot2grid(gridsize, (1, 1))
-    ax4.set_xlabel('$To$')
-    ax4.set_ylabel('$I$')
+    ax4.set_xlabel('$t$')
+    ax4.set_ylabel('$To$')
 
     ax5 = plt.subplot2grid(gridsize, (2, 0))
-    ax5.set_xlabel('$I*Rp$')
-    ax5.set_ylabel('$I$')
+    ax5.set_xlabel('$t$')
+    ax5.set_ylabel('$I*Rp$')
 
     ax1.plot(Tgraph, Igraph)
     ax2.plot(Tgraph, Ugraph)
@@ -73,14 +73,14 @@ def Fint(I, z):
     gt0 = t0
     m = interpolation(I, tableI, tableM)
     t = t0 + (tw - t0) * (z ** m)
-    sigma = interpolation(I, tableI, tableSigma)
+    sigma = interpolation(t, tableT, tableSigma)
 
-    return sigma * t * z
+    return sigma * z
 
 def iint(I):
     a = 0
     b = 1
-    n = 40
+    n = 100
     h = (b - a) / n
     s = (Fint(I, a) + Fint(I, b)) / 2
     x = 0
@@ -127,16 +127,16 @@ def Unext(I, U, le, R, Lk, hn, Rk, Ck):
 
 def main():
     R = 0.35
-    le = 0.12
+    le = 12
     Lk = 0.000187
     Ck = 0.000268
     Rk = 0.25
     Uc = 1400
     I = 0
-    hn = 0.0000001
+    hn = 0.000001
     t = 0
 
-    for i in range(12000):
+    for i in range(1200):
         I = Inext(I, Uc, le, R, Lk, hn, Rk, Ck)
         Uc = Unext(I, Uc, le, R, Lk, hn, Rk, Ck)
         t += hn
