@@ -56,6 +56,7 @@ MN = x_minus_1_2(l) / h - (p(l) + p(l - h)) * h / 16
 PN = -(alphaN * T0 + ((f(l) + f(l - h)) / 2 + f(l)) * h / 4)
 
 def run_through():
+    # Прямой ход
     eps = [0, -M0 / K0]
     eta = [0, P0 / K0]
 
@@ -67,6 +68,7 @@ def run_through():
         n += 1
         x += h
 
+    # Обратный ход
     t = [0] * (n + 1)
     t[n] = (PN - MN * eta[n]) / (KN + MN * eps[n])
 
@@ -78,7 +80,6 @@ def run_through():
 def main():
     t = run_through()
     x = [i for i in np.arange(0, l, h)]
-
     plt.plot(x, t[:-1])
     plt.xlabel("Длина, см")
     plt.ylabel("Температура, K")
