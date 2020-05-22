@@ -20,7 +20,7 @@ h = 0.01
 t = 1
 
 def k(T):
-    return a1 / (b1 + c1 * T ** m1)
+    return a1 * (b1 + c1 * T ** m1)
 
 def c(T):
     return a2 + b2 * T ** m2 - c2 / T ** 2
@@ -119,7 +119,7 @@ def iter_method():
     result = []
     n = int(l / h)
     T = [T0] * (n + 1)
-    newT = [0] * n
+    newT = [0] * (n + 1)
     ti = 0
 
     result.append(T)
@@ -132,9 +132,7 @@ def iter_method():
                 break
             buf = newT
 
-
         result.append(newT)
-
         ti += t
         if (check_eps(T, newT) == False):
             break
@@ -142,12 +140,6 @@ def iter_method():
         T = newT
 
     return result, ti
-
-def printMatrix ( matrix ):
-   for row in matrix:
-      for x in row:
-          print ( "{:4d}".format(x), end = "" )
-      print ()
 
 def main():
     res, ti = iter_method()
@@ -157,9 +149,12 @@ def main():
     n = 0
     for temp in res:
         if (n % 2 == 0):
+            print(n)
             plt.plot(x, temp[:-1])
         n += 1
     plt.plot(x, res[-1][:-1], color = 'blue')
+    plt.xlabel("Длина, см")
+    plt.ylabel("Температура, K")
     plt.show()
 
     i = 0
@@ -167,6 +162,8 @@ def main():
         xfix = [temp[int(i / h)] for temp in res]
         plt.plot(te, xfix[:-1])
         i += 0.2
+    plt.xlabel("Время, c")
+    plt.ylabel("Температура, K")
     plt.show()
 
 
