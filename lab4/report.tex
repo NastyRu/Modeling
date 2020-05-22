@@ -532,6 +532,77 @@ def iter_method():
 
 \item Выполните, полагая для простоты, что все коэффициенты зависят только от одной переменной $y_n$. Приведите линеаризованный вариант уравнения и опишите алгоритм его решения.
 
+Необходимо с помощью метода Ньютона линеаризовать систему 7. 
+
+Зная, что в нашем случае коэффициенты системы зависят только от $y_n$. 
+
+\begin{multline*}
+\bigg(\buildrel\,\,\frown\over{A}_n\buildrel\,\,\frown\over{y}_{n-1}-\buildrel\,\,\frown\over{B}_n\buildrel\,\,\frown\over{y}_n+\buildrel\,\,\frown\over{D}_n\buildrel\,\,\frown\over{y}_{n+1}+\buildrel\,\,\frown\over{F}_n\bigg)\bigg|_{(s-1)}+\buildrel\,\,\frown\over{A}_n^{(s-1)}\Delta\buildrel\,\,\frown\over{y}_{n-1}^{(s)}+\\
++\bigg(\frac{\partial \buildrel\,\,\frown\over{A}_n}{\partial\buildrel\,\,\frown\over{y}_n}\buildrel\,\,\frown\over{y}_{n-1}-\frac{\partial \buildrel\,\,\frown\over{B}_n}{\partial\buildrel\,\,\frown\over{y}_n}\buildrel\,\,\frown\over{y}_{n}-\buildrel\,\,\frown\over{B}_n+\frac{\partial \buildrel\,\,\frown\over{D}_n}{\partial\buildrel\,\,\frown\over{y}_n}\buildrel\,\,\frown\over{y}_{n+1}+\frac{\partial \buildrel\,\,\frown\over{F}_n}{\partial\buildrel\,\,\frown\over{y}_n}\bigg)\bigg|_{(s-1)}\cdot
+\Delta\buildrel\,\,\frown\over{y}_{n}^{(s)}+ \\
++\buildrel\,\,\frown\over{D}_n^{(s-1)}\Delta\buildrel\,\,\frown\over{y}_{n+1}^{(s)}=0
+\end{multline*}
+
+Тогда
+
+\begin{equation*}
+A_n\Delta\buildrel\,\,\frown\over{y}_{n-1}^{(s)}-B_n\Delta\buildrel\,\,\frown\over{y}_{n}^{(s)}+D_n\Delta\buildrel\,\,\frown\over{y}_{n+1}^{(s)}=-F_n
+\end{equation*}
+
+\begin{equation*}
+\begin{aligned}
+&A_n=\buildrel\,\,\frown\over{A}_n^{(s-1)}\\
+&B_n=\bigg(-\frac{\partial \buildrel\,\,\frown\over{A}_n}{\partial\buildrel\,\,\frown\over{y}_n}\buildrel\,\,\frown\over{y}_{n-1}+\frac{\partial \buildrel\,\,\frown\over{B}_n}{\partial\buildrel\,\,\frown\over{y}_n}\buildrel\,\,\frown\over{y}_{n}+\buildrel\,\,\frown\over{B}_n-\frac{\partial \buildrel\,\,\frown\over{D}_n}{\partial\buildrel\,\,\frown\over{y}_n}\buildrel\,\,\frown\over{y}_{n+1}+\frac{\partial \buildrel\,\,\frown\over{F}_n}{\partial\buildrel\,\,\frown\over{y}_n}\bigg)\bigg|_{(s-1)}\\
+&D_n=\buildrel\,\,\frown\over{D}_n^{(s-1)}\\
+&F_n=\bigg(\buildrel\,\,\frown\over{A}_n\buildrel\,\,\frown\over{y}_{n-1}-\buildrel\,\,\frown\over{B}_n\buildrel\,\,\frown\over{y}_n+\buildrel\,\,\frown\over{D}_n\buildrel\,\,\frown\over{y}_{n+1}+\buildrel\,\,\frown\over{F}_n\bigg)\bigg|_{(s-1)}
+\end{aligned}
+\end{equation*}
+
+Далее краевые условия
+
+\begin{multline*}
+\bigg( \buildrel\,\,\frown\over{K}_0 \buildrel\,\,\frown\over{y}_0+ \buildrel\,\,\frown\over{M}_0 \buildrel\,\,\frown\over{y}_1- \buildrel\,\,\frown\over{P}_0\bigg)\bigg|_{(s-1)}+\buildrel\,\,\frown\over{K}_0^{(s-1)}\Delta\buildrel\,\,\frown\over{y}_{0}^{(s)}+\buildrel\,\,\frown\over{M}_0^{(s-1)}\Delta\buildrel\,\,\frown\over{y}_{1}^{(s)}=0
+\end{multline*}
+
+\begin{multline*}
+\bigg( \buildrel\,\,\frown\over{K}_N \buildrel\,\,\frown\over{y}_N+ \buildrel\,\,\frown\over{M}_{N-1} \buildrel\,\,\frown\over{y}_{N-1}- \buildrel\,\,\frown\over{P}_N\bigg)\bigg|_{(s-1)}+\buildrel\,\,\frown\over{K}_N^{(s-1)}\Delta\buildrel\,\,\frown\over{y}_{N}^{(s)}+\buildrel\,\,\frown\over{M}_{N-1}^{(s-1)}\Delta\buildrel\,\,\frown\over{y}_{N-1}^{(s)}=0
+\end{multline*}
+
+Тогда
+
+\begin{equation*}
+\begin{aligned}
+&K_0\Delta\buildrel\,\,\frown\over{y}_{0}^{(s)}+M_0\Delta\buildrel\,\,\frown\over{y}_{1}^{(s)}=P_0\\
+&K_N\Delta\buildrel\,\,\frown\over{y}_{N}^{(s)}+M_{N-1}\Delta\buildrel\,\,\frown\over{y}_{N-1}^{(s)}=P_N\\
+\end{aligned}
+\end{equation*}
+
+\begin{equation*}
+\begin{aligned}
+&K_0=\buildrel\,\,\frown\over{K}_0^{(s-1)}\\
+&M_0=\buildrel\,\,\frown\over{M}_0^{(s-1)}\\
+&P_0=-\bigg( \buildrel\,\,\frown\over{K}_0 \buildrel\,\,\frown\over{y}_0+ \buildrel\,\,\frown\over{M}_0 \buildrel\,\,\frown\over{y}_1- \buildrel\,\,\frown\over{P}_0\bigg)\bigg|_{(s-1)}\\
+&K_N=\buildrel\,\,\frown\over{K}_N^{(s-1)}\\
+&M_{N-1}=\buildrel\,\,\frown\over{M}_{N-1}^{(s-1)}\\
+&P_N=-\bigg( \buildrel\,\,\frown\over{K}_N \buildrel\,\,\frown\over{y}_N+ \buildrel\,\,\frown\over{M}_{N-1} \buildrel\,\,\frown\over{y}_{N-1}- \buildrel\,\,\frown\over{P}_N\bigg)\bigg|_{(s-1)}\\
+\end{aligned}
+\end{equation*}
+
+Получаем систему
+
+\begin{equation}
+\begin{cases}
+A_n\Delta\buildrel\,\,\frown\over{y}_{n-1}^{(s)}-B_n\Delta\buildrel\,\,\frown\over{y}_{n}^{(s)}+D_n\Delta\buildrel\,\,\frown\over{y}_{n+1}^{(s)}=-F_n\\
+K_0\Delta\buildrel\,\,\frown\over{y}_{0}^{(s)}+M_0\Delta\buildrel\,\,\frown\over{y}_{1}^{(s)}=P_0\\
+K_N\Delta\buildrel\,\,\frown\over{y}_{N}^{(s)}+M_{N-1}\Delta\buildrel\,\,\frown\over{y}_{N-1}^{(s)}=P_N\\
+\end{cases}
+\end{equation}
+
+Решается методом прогонки, в результате находятся все $\Delta \buildrel\,\,\frown\over y_n^s$, после чего определяются значения искомой функции в узлах $ \buildrel\,\,\frown\over y_n^s=  \buildrel\,\,\frown\over y_n^{(s-1)}+\Delta \buildrel\,\,\frown\over y_n^s $. 
+
+Итерационный процесс заканчивается при выполнении условия 
+
+$\max\bigg|\frac{\Delta \buildrel\,\,\frown\over y_n^s}{\buildrel\,\,\frown\over y_n^s}\bigg|\le\varepsilon$. 
 
 \end{enumerate}
 
