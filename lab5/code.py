@@ -15,13 +15,13 @@ alphaN = 0.01
 l = 10
 T0 = 300
 R = 0.5
-h = 0.1
+h = 0.01
 t = 0.1
 Fmax = 150
-tmax = 20
+tmax = 10
 
-period = 3
-tu = 1
+period = 1
+tu = 0.9
 
 def k(T):
     return a1 * (b1 + c1 * T ** m1)
@@ -54,8 +54,8 @@ def func_minus_1_2(x, step, func):
 
 def F0(T):
     if (T % period <= tu):
-        return 50
-    return Fmax / tmax * T * exp(-(T / tmax - 1))
+        return Fmax / tmax * T * exp(-(T / tmax - 1))
+    return 0
     #return Fmax / tmax * T * exp(-(T / tmax - 1))
 
 def A(T):
@@ -94,6 +94,8 @@ def run_through(prevT, time):
     PN = h / 8 * func_minus_1_2(prevT[-1], t, c) * (prevT[-1] + prevT[-2]) + \
                         h / 4 * c(prevT[-1]) * prevT[-1] + t * alphaN * T0 + \
                         t * h / 4 * (f(l) + f(l - h / 2))
+
+    #print(time, P0, F0(time))
     '''
     K0 = h / 8 * func_plus_1_2(prevT[0], t, c) + h / 4 * c(prevT[0]) + \
                         func_plus_1_2(0, h, k) * t / h + \
@@ -139,6 +141,7 @@ def run_through(prevT, time):
         n += 1
         x += h
     '''
+
     # Обратный ход
     y = [0] * (n + 1)
     y[n] = (PN - MN * eta[n]) / (KN + MN * eps[n])
@@ -150,7 +153,7 @@ def run_through(prevT, time):
 
 def check_eps(T, newT):
     for i, j in zip(T, newT):
-        if fabs((i - j) / j) > 1e-3:
+        if fabs((i - j) / j) > 1e-4:
             return True
     return False
 
@@ -181,10 +184,8 @@ def iter_method():
             buf = newT
 
         result.append(newT)
-        #print(ti)
         if (check_eps(T, newT) == False):
             break
-        #print(T)
 
         T = newT
 
@@ -192,7 +193,7 @@ def iter_method():
 
 def main():
     '''
-    deltah = [1, 0.5, 0.1, 0.05, 0.01, 0.005, 0.001]
+    deltah = [1, 0.1, 0.01, 0.001]
     result = []
     global t
     for hi in deltah:
@@ -203,17 +204,19 @@ def main():
         n = 0
         print(len(res))
         for temp in res:
-            if (fabs(n-10) < 0.0001):
+            if (fabs(n-1) < 0.0001):
+                print()
                 print(t)
+                print()
                 result.append(temp[:-1])
             n += t
-    print('    1    |   0.5   |   0.1   |   0.05  |   0.01  |  0.005  |  0.001  |')
+    print('    1    |   0.1   |   0.01  |  0.001  |')
     for i in range(len(result[0])):
         for j in range(len(result)):
             print(' %3.3f |' % result[j][i], end = '')
         print()
 
-    deltah = [1, 0.5, 0.1, 0.05, 0.01, 0.005, 0.001]
+    deltah = [1, 0.1, 0.01, 0.001]
     result = []
     global h
     for hi in deltah:
@@ -224,13 +227,14 @@ def main():
         xfix = [temp[int(i / h)] for temp in res]
         result.append(xfix)
 
-    print('    1    |   0.5   |   0.1   |   0.05  |   0.01  |  0.005  |  0.001  |')
+    print('    1    |   0.1   |   0.01  |  0.001  |')
     for i in range(len(result[0])):
         for j in range(len(result)):
             print(' %3.3f |' % result[j][i], end = '')
         print()
-    arraya2 = [0.5, 1, 2, 5]
-    arrayb2 = [5e-4, 1e-3, 5e-3, 1e-2]
+
+    arraya2 = [2.049, 5, 10, 15]
+    arrayb2 = [0.000564, 0.001, 0.01, 0.1]
     result = []
     resulti = []
     global a2, b2
@@ -248,6 +252,7 @@ def main():
 
         i = 0
         xfix = [temp[int(i / h)] for temp in res]
+        print(xfix[:-1])
         result.append(xfix[:-1])
         resulti.append(te)
 
@@ -257,7 +262,7 @@ def main():
     plt.xlabel("Время, c")
     plt.ylabel("Температура, K")
     plt.show()
-    '''
+
     res, ti = iter_method()
 
     x = [i for i in np.arange(0, l, h)]
@@ -279,6 +284,20 @@ def main():
     i = 0
     xfix = [temp[int(i / h)] for temp in res]
     plt.plot(te, xfix[:-1])
+    plt.xlabel("Время, c")
+    plt.ylabel("Температура, K")
+    plt.show()'''
+
+    res, ti = iter_method()
+
+    te = []
+    i = 0
+    while (i < ti):
+        te.append(i)
+        i += t
+    i = 0
+    xfix = [temp[int(i / h)] for temp in res]
+    plt.plot(te, xfix[1:])
     plt.xlabel("Время, c")
     plt.ylabel("Температура, K")
     plt.show()
