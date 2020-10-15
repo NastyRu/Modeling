@@ -3,6 +3,7 @@ import csv
 import random
 import numpy
 
+
 def get_time():
     now = datetime.datetime.now()
 
@@ -17,10 +18,12 @@ def get_time():
 
     return int(now.hour), minute, second
 
+
 def read_csv(filename):
     with open(filename) as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter = ';')
+        csv_reader = csv.reader(csv_file, delimiter=';')
         return list(csv_reader)
+
 
 def get_table_number(table, i, j, num, count):
     res = []
@@ -52,11 +55,13 @@ def get_table_number(table, i, j, num, count):
         res.append(res_v)
     return res
 
+
 def alg_generator(num, count):
     res = []
     for c in range(count):
         res.append(random.randint(pow(10, num - 1), pow(10, num) - 1))
     return res
+
 
 def table_generator(num, count):
     hour, minute, second = get_time()
@@ -65,6 +70,7 @@ def table_generator(num, count):
     else:
         table = read_csv("even_table.csv")
     return get_table_number(table, second, minute, num, count)
+
 
 def frequency_creteria(list, num):
     freq = [0 for i in range(5)]
@@ -90,6 +96,7 @@ def frequency_creteria(list, num):
 
     return freq
 
+
 def frequency_creteria2(list, num):
     mean = numpy.mean(list)
     disp = numpy.sqrt(numpy.var(list))
@@ -106,6 +113,7 @@ def frequency_creteria2(list, num):
             count += 1
 
     return [(2 * disp / (end - begin)), count / len(list)]
+
 
 def table_print(list1, list2, list3, n):
     print("   |   N   |   1   |   2   |   3   |")
@@ -126,6 +134,7 @@ def table_print(list1, list2, list3, n):
     print("Ожидаемый  | %.2f  | %.2f  | %.2f  |" % (ofreq1, ofreq2, ofreq3))
     print("Полученный | %.2f  | %.2f  | %.2f  |" % (pfreq1, pfreq2, pfreq3))
 
+
 def main():
     n = 10
     alg_list1 = alg_generator(1, n)
@@ -140,6 +149,7 @@ def main():
     print()
     print("Табличный генератор")
     table_print(table_list1, table_list2, table_list3, n)
+
 
 if __name__ == "__main__":
     main()
