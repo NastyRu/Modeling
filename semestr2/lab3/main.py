@@ -3,11 +3,7 @@ from dash.dependencies import Input, Output, State
 import dash_table
 import dash_html_components as html
 import dash_core_components as dcc
-import sys
 import numpy
-
-f = open('out.txt', 'w')
-f.close()
 
 title = '|Состояние         |           Среднее время              |           Cреднее относительное время\n\
 |                           |   пребывания системы            |                пребывания системы\n\
@@ -96,7 +92,7 @@ def print_data(n_clicks, data):
         out, time = solve(dictlist)
         string = title
         for i in range(len(out)):
-            string += "|{:^26d}|{:^48.3f}|{:^75.3f}\n".format(i, time[i], out[i])
+            string += "|{:^26d}|{:^48.3f}|{:^75.3f}\n".format(i + 1, time[i], out[i])
         return string
 
 
@@ -120,16 +116,6 @@ def solve(array):
     time = numpy.zeros(n)
     for i in range(n):
         time[i] = (1 - out[i]) / out[i] / sum[i]
-
-    orig_stdout = sys.stdout
-    f = open('out.txt', 'a')
-    sys.stdout = f
-    print(coef)
-    print(m)
-    print(out)
-    print(time)
-    f.close()
-    sys.stdout = orig_stdout
     return out, time
 
 
